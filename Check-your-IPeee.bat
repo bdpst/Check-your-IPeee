@@ -4,7 +4,7 @@ chcp 65001 >nul
 
 set "COLOR_GREEN=[32m"
 set "COLOR_RED=[31m"
-set "COLOR_BLUE=[34m"
+set "COLOR_BLUE=[38;2;255;248;220m"
 set "COLOR_YELLOW=[33m"
 set "COLOR_CYAN=[36m"
 set "COLOR_RESET=[0m"
