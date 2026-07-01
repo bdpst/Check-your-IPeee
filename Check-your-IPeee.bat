@@ -66,6 +66,23 @@ if errorlevel 1 (
     echo %COLOR_RED%Не найден активный локальный IPv4-адрес.%COLOR_RESET%
 )
 
+echo.
+echo %COLOR_BLUE%=== Внешний IP-адрес ===%COLOR_RESET%
+
+powershell.exe -NoProfile -ExecutionPolicy Bypass -Command ^
+  "$ErrorActionPreference = 'Stop';" ^
+  "try {" ^
+  "  $ipResponse = Invoke-RestMethod -Uri 'https://api4.ipify.org?format=json' -TimeoutSec 5;" ^
+  "  if ([string]::IsNullOrWhiteSpace($ipResponse.ip)) { throw 'External IPv4 service returned no data.' }" ^
+  "  $geoResponse = Invoke-RestMethod -Uri ('https://ipwho.is/' + $ipResponse.ip) -TimeoutSec 5;" ^
+  "  $countryCode = if ($geoResponse.success) { $geoResponse.country_code } else { '' };" ^
+  "  Write-Host 'Внешний IP: ' -NoNewline -ForegroundColor Green;" ^
+  "  if ($countryCode) { Write-Host ($ipResponse.ip + ' (' + $countryCode + ')') -ForegroundColor Green } else { Write-Host $ipResponse.ip -ForegroundColor Green }" ^
+  "  if ($countryCode) { Write-Host 'Страна:     ' -NoNewline -ForegroundColor Cyan; Write-Host $countryCode -ForegroundColor Cyan }" ^
+  "} catch {" ^
+  "  Write-Host 'Внешний IP: не удалось определить' -ForegroundColor Yellow" ^
+  "}"
+
 echo %COLOR_BLUE%=== Проверка завершена ===%COLOR_RESET%
 echo %COLOR_BLUE%Дата: %CURRENT_DATE%, Время: %CURRENT_TIME%%COLOR_RESET%
 echo.
