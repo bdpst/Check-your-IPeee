@@ -48,6 +48,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -Command ^
   "      Mask = $network.Mask;" ^
   "      InterfaceAlias = $config.InterfaceAlias;" ^
   "      Gateway = (@($config.IPv4DefaultGateway | ForEach-Object { $_.NextHop }) -join ', ');" ^
+  "      DnsServers = (@(Get-DnsClientServerAddress -InterfaceIndex $config.InterfaceIndex -AddressFamily IPv4 -ErrorAction SilentlyContinue | ForEach-Object { $_.ServerAddresses }) -join ', ');" ^
   "      InterfaceMetric = if ($iface) { $iface.InterfaceMetric } else { 9999 }" ^
   "    }" ^
   "  }" ^
@@ -60,7 +61,8 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -Command ^
   "Write-Host 'IP-адрес:   ' -NoNewline -ForegroundColor Green; Write-Host $item.IPAddress -ForegroundColor Green;" ^
   "Write-Host 'Маска:      ' -NoNewline -ForegroundColor Cyan; Write-Host $item.Mask -ForegroundColor Cyan;" ^
   "Write-Host 'Интерфейс:  ' -NoNewline -ForegroundColor Cyan; Write-Host $item.InterfaceAlias -ForegroundColor Cyan;" ^
-  "if ($item.Gateway) { Write-Host 'Шлюз:       ' -NoNewline -ForegroundColor Cyan; Write-Host $item.Gateway -ForegroundColor Cyan }"
+  "if ($item.Gateway) { Write-Host 'Шлюз:       ' -NoNewline -ForegroundColor Cyan; Write-Host $item.Gateway -ForegroundColor Cyan }" ^
+  "if ($item.DnsServers) { Write-Host 'DNS:        ' -NoNewline -ForegroundColor Cyan; Write-Host $item.DnsServers -ForegroundColor Cyan }"
 
 if errorlevel 1 (
     echo %COLOR_RED%Не найден активный локальный IPv4-адрес.%COLOR_RESET%
