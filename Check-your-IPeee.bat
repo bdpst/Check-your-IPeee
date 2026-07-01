@@ -4,7 +4,7 @@ chcp 65001 >nul
 
 set "COLOR_GREEN=[32m"
 set "COLOR_RED=[31m"
-set "COLOR_BLUE=[38;2;255;248;220m"
+set "COLOR_MILK=[38;2;255;248;220m"
 set "COLOR_YELLOW=[33m"
 set "COLOR_CYAN=[36m"
 set "COLOR_RESET=[0m"
@@ -13,8 +13,8 @@ for /f %%a in ('date /t') do set "CURRENT_DATE=%%a"
 for /f %%a in ('time /t') do set "CURRENT_TIME=%%a"
 
 echo.
-echo %COLOR_BLUE%=== Определение локального IP-адреса и подсети ===%COLOR_RESET%
-echo %COLOR_BLUE%Дата: %CURRENT_DATE%, Время: %CURRENT_TIME%%COLOR_RESET%
+echo %COLOR_MILK%=== Определение локального IP-адреса и подсети ===%COLOR_RESET%
+echo %COLOR_MILK%Дата: %CURRENT_DATE%, Время: %CURRENT_TIME%%COLOR_RESET%
 echo.
 
 powershell.exe -NoProfile -ExecutionPolicy Bypass -Command ^
@@ -69,7 +69,7 @@ if errorlevel 1 (
 )
 
 echo.
-echo %COLOR_BLUE%=== Внешний IP-адрес ===%COLOR_RESET%
+echo %COLOR_MILK%=== Внешний IP-адрес ===%COLOR_RESET%
 
 powershell.exe -NoProfile -ExecutionPolicy Bypass -Command ^
   "$ErrorActionPreference = 'Stop';" ^
@@ -85,8 +85,8 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -Command ^
   "  Write-Host 'Внешний IP: не удалось определить' -ForegroundColor Yellow" ^
   "}"
 
-echo %COLOR_BLUE%=== Проверка завершена ===%COLOR_RESET%
-echo %COLOR_BLUE%Дата: %CURRENT_DATE%, Время: %CURRENT_TIME%%COLOR_RESET%
+echo %COLOR_MILK%=== Проверка завершена ===%COLOR_RESET%
+echo %COLOR_MILK%Дата: %CURRENT_DATE%, Время: %CURRENT_TIME%%COLOR_RESET%
 echo.
 
 pause
